@@ -12,7 +12,7 @@
         }
 
         .header {
-            background-color: #f5deb3; 
+            background-color: #f5deb3;
             color: #333;
             text-align: center;
             padding: 15px;
@@ -60,7 +60,6 @@
             background: #666;
         }
 
-    /*Posicionar el contenedor de calificaciones a la derecha del menú*/
         #calificaciones-container {
             position: absolute;
             top: 70px;
@@ -76,18 +75,16 @@
 <body>
 
     <div class="header">
-        Bienvenido Alumno
+        Bienvenido Maestro
     </div>
 
     <div class="menu">
-        <button class="menu-item" onclick="toggleMenu('semestre')">Semestre Actual</button>
-        <div id="semestre" class="submenu">
-            <a href="#" onclick="cargarCalificaciones('parcial')">Calificaciones Parciales</a>
-            <a href="#" onclick="cargarCalificaciones('final')">Calificaciones Finales</a>
+        <button class="menu-item" onclick="toggleMenu('grupos')">Admin De Mis Grupos</button>
+        <div id="grupos" class="submenu">
+            <a href="#" onclick="cargarCalificaciones('parcial')">Detalle de Mismaterias</a>
             <a href="#">Mi Horario de Clases</a>
-            <a href="#">Avisos Importantes</a>
         </div>
-        
+
         <button class="menu-item" onclick="toggleMenu('generales')">Generales</button>
         <div id="generales" class="submenu">
             <a href="#">Mi Kardex</a>
@@ -115,18 +112,18 @@
                     .then(response => response.json())
                     .then(data => {
                         let contenedor = document.getElementById("calificaciones-container");
-                        contenedor.innerHTML = "<h2>Calificaciones</h2>";
+                        contenedor.innerHTML = "<h2>Materias</h2>";
 
                         if (data.length === 0) {
-                            contenedor.innerHTML += "<p>No hay calificaciones disponibles.</p>";
+                            contenedor.innerHTML += "<p>No hay materias disponibles.</p>";
                             return;
                         }
 
                         let lista = document.createElement("ul");
-                        data.forEach(calificacion => {
-                            let item = document.createElement("li");
-                            item.textContent = `${calificacion.materia}: ${calificacion.calificacion}`;
-                            lista.appendChild(item);
+                        data.forEach(item => {
+                            let li = document.createElement("li");
+                            li.textContent = `${item.materia}: ${item.calificacion}`;
+                            lista.appendChild(li);
                         });
                         contenedor.appendChild(lista);
                     })
