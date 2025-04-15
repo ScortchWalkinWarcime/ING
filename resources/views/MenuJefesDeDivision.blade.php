@@ -87,7 +87,6 @@
 
         <button class="menu-item" onclick="toggleMenu('generales')">Generales</button>
         <div id="generales" class="submenu">
-            <a href="#">Mi Kardex</a>
             <a href="#">Cambio de Contraseña</a>
         </div>
 
@@ -112,10 +111,10 @@
                     .then(response => response.json())
                     .then(data => {
                         let contenedor = document.getElementById("calificaciones-container");
-                        contenedor.innerHTML = "<h2>Materias</h2>";
+                        contenedor.innerHTML = "<h2>Maestros</h2>";
 
                         if (data.length === 0) {
-                            contenedor.innerHTML += "<p>No hay materias disponibles.</p>";
+                            contenedor.innerHTML += "<p>No hay maestros disponibles.</p>";
                             return;
                         }
 

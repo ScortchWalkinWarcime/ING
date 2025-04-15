@@ -117,18 +117,27 @@
 
     <div class="container">
         <div class="formulariocaja">
-        <form method="POST" action="{{ url('/Itesa') }}" id="vaidrollteam">
+        <form method="POST" action="{{ route('login') }}" id="vaidrollteam">
     @csrf
+    @if ($errors->any())
+    <div style="color: red; margin-bottom: 1em;">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <h1 class="h1">INGENIUM</h1>
     <img src="{{ asset('Ingenium-Logo.png') }}" class="logo" alt="Ingenium-Logo.png">
-    <input type="text" id="usuario" placeholder="&#128100; Usuario" class="cajaentradatexto" required>
-    <input type="password" id="password" placeholder="&#128274; Password" class="cajaentradatexto" required>
+    <input type="text" name="usuario" id="usuario" placeholder="&#128100; Usuario" class="cajaentradatexto" required>
+    <input type="password" name="password" id="password" placeholder="&#128274; Password" class="cajaentradatexto" required>
     <input type="submit" value="Iniciar sesión" class="botonenviar">
     <div class="recuerdame-container">
-                    <input type="checkbox" id="rememberMe" name="rememberMe">
-                    <label for="rememberMe">Recuérdame</label>
-                </div>
-                <a href="{{ url('/password/recover') }}" class="botonenviar boton-recuperar">Recuperar contraseña</a>
+        <input type="checkbox" id="rememberMe" name="rememberMe">
+        <label for="rememberMe">Recuérdame</label>
+    </div>
+    <a href="{{ url('/password/recover') }}" class="botonenviar boton-recuperar">Recuperar contraseña</a>
 </form>
         </div>
     </div>
