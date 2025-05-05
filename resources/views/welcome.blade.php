@@ -32,7 +32,7 @@
             top: 0;
         }
         .header img {
-            height: 60px; /* Ajusta la altura de las imágenes */
+            height: 60px;
             margin: 0 10px;
         }
         .container {
@@ -105,6 +105,26 @@
             font-size: 16px;
             margin-top: 1em;
         }
+        .google-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 2em;
+            padding: 0.8em;
+            width: 100%;
+            margin-bottom: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            color: black;
+        }
+        .google-btn img {
+            width: 20px;
+            height: 20px;
+        }
     </style>
 </head>
 <body>
@@ -117,50 +137,57 @@
 
     <div class="container">
         <div class="formulariocaja">
-        <form method="POST" action="{{ route('login') }}" id="vaidrollteam">
-    @csrf
-    @if ($errors->any())
-    <div style="color: red; margin-bottom: 1em;">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
-    <h1 class="h1">INGENIUM</h1>
-    <img src="{{ asset('Ingenium-Logo.png') }}" class="logo" alt="Ingenium-Logo.png">
-    <input type="text" name="usuario" id="usuario" placeholder="&#128100; Usuario" class="cajaentradatexto" required>
-    <input type="password" name="password" id="password" placeholder="&#128274; Password" class="cajaentradatexto" required>
-    <input type="submit" value="Iniciar sesión" class="botonenviar">
-    <div class="recuerdame-container">
-        <input type="checkbox" id="rememberMe" name="rememberMe">
-        <label for="rememberMe">Recuérdame</label>
-    </div>
-    <a href="{{ url('/password/recover') }}" class="botonenviar boton-recuperar">Recuperar contraseña</a>
-</form>
+            <form method="POST" action="{{ route('login') }}" id="vaidrollteam">
+                @csrf
+                @if ($errors->any())
+                <div style="color: red; margin-bottom: 1em;">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+
+                <h1 class="h1">INGENIUM</h1>
+                <img src="{{ asset('Ingenium-Logo.png') }}" class="logo" alt="Ingenium-Logo.png">
+
+                <input type="text" name="usuario" id="usuario" placeholder="&#128100; Usuario" class="cajaentradatexto" required>
+                <input type="password" name="password" id="password" placeholder="&#128274; Password" class="cajaentradatexto" required>
+
+                <input type="submit" value="Iniciar sesión" class="botonenviar">
+
+                <!-- Botón de Google -->
+                <a href="{{ url('/auth/google') }}" class="google-btn">
+                    <img src="{{ asset('Google_logo.png') }}" alt="">
+                    Iniciar sesión Google
+                </a>
+
+                <div class="recuerdame-container">
+                    <input type="checkbox" id="rememberMe" name="rememberMe">
+                    <label for="rememberMe">Recuérdame</label>
+                </div>
+
+                <a href="{{ url('/password/recover') }}" class="botonenviar boton-recuperar">Recuperar contraseña</a>
+            </form>
         </div>
     </div>
 
     <footer>
         © 2025 INGENIUM Login. Todos los derechos reservados | ITESA 
     </footer>
+
     <script>
         document.getElementById('vaidrollteam').addEventListener('submit', function(event) {
-            event.preventDefault(); // Evita que se recargue la página automáticamente
-            
+            event.preventDefault();
             let usuario = document.getElementById('usuario').value;
-            
             if (usuario.trim() === '') {
                 alert('Por favor, ingresa un nombre de usuario.');
                 return;
             }
-            
             alert('Bienvenido ' + usuario);
-            
-            // Redirigir a la página con el menú después de la alerta
             window.location.href = "/Menu";
         });
-        </script>
+    </script>
 </body>
 </html>

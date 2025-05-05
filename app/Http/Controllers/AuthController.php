@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illiuminate\Support\Facades\Hash;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -12,15 +13,15 @@ class AuthController extends Controller
     {
         // Validar los datos del formulario
         $request->validate([
-            'usuario' => 'required|string',
+            'email' => 'required|string',
             'password' => 'required|string',
         ]);
 
         // Verificar si el usuario existe en la base de datos
-        $user = User::where('username', $request->usuario)->first();
+        $email = email::where('email', $request->email)->first();
 
-        if (!$user || !Auth::attempt(['username' => $request->usuario, 'password' => $request->password])) {
-            return back()->withErrors(['usuario' => 'Usuario o contraseña incorrectos.']);
+        if (!$email || !Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            return back()->withErrors(['email' => 'Email o contraseña incorrectos.']);
         }
 
         // Redirigir al menú si la autenticación es exitosa

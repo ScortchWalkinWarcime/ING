@@ -11,19 +11,19 @@ use App\Http\Controllers\CalificacionController;
 
 Route::get('/Itesa', function () {
     return view('welcome');
-});
+})-> middleware('guest');
 
 Route::get('/MenuMaestro', function () {
     return view('MenuMaestros');
-});
+})-> middleware('auth');
 
-Route::get('/Menu', function () {
+Route::get('/Menu', function ()  {
     return view('Menu');
-});
+})-> middleware('auth');
 
 Route::get('/MenuJefe', function () {
     return view('MenuJefesDeDivision');
-});
+})-> middleware('auth');
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/Menu', function () {
