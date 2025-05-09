@@ -29,22 +29,13 @@ Route::get('/MenuJefe', function () {
     return view('MenuJefesDeDivision');
 })-> middleware('auth');
 
-Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::get('/Menu', function () {
-    return view('menu');
-})->middleware('auth')->name('menu');
-
 
 Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
-
-
+Route::get('/login', [LoginController::class, 'show']);
+Route::get('/login', [LoginController::class, 'login']);
 Route::get('/admin', function () {
     return view('Admin');
-});
-
-Route::get('/register', function () {
-    return view('register'); // This view should contain the registration form
 });
 
 Route::get('/password/recover', function () {
@@ -55,11 +46,6 @@ Route::get('/Itesa', function () {
     return view('welcome'); // Vista del login
 })->name('login');
 
-Route::post('/Itesa', [AuthController::class, 'login']); // Procesar el login
-
-Route::get('/Menu', function () {
-    return view('menu'); // Vista del menú después de iniciar sesión
-})->name('menu');
 
 Route::get('/calificaciones/{tipo}', [CalificacionController::class, 'obtenerCalificaciones']);
 

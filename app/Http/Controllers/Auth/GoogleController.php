@@ -36,7 +36,7 @@ class GoogleController extends Controller
             // Iniciar sesión con el usuario
             Auth::login($user);
 
-            return redirect('/Menu');
+            return redirect('http://localhost:8000/Menu');
 
         } catch (\Exception $e) {
             return redirect('/')->with('error', 'No se pudo autenticar con Google.');
