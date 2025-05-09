@@ -14,6 +14,6 @@ class Calificaciones extends Model
 
     public function usuario()
     {
-        return $this->belongsTo(\App\Models\User::class, 'usuario_id');
+        return $this->belongsTo(\App\Models\user::class, 'usuario_id');
     }
 }

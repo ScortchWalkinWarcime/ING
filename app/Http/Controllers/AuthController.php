@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Calificacion; // Asegúrate de tener un modelo para las calificaciones
 
-class CalificacionesController extends Controller
+class AuthController extends Controller
 {
     public function obtenerCalificaciones($tipo)
     {

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Request\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 
-class LoninController extends Controller
+class LoginController extends Controller
 {
     public function show(){
         return view('wecome');
