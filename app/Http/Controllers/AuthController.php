@@ -1,30 +1,17 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illiuminate\Support\Facades\Hash;
-use App\Models\User;
+use App\Models\Calificacion; // Asegúrate de tener un modelo para las calificaciones
 
-class AuthController extends Controller
+class CalificacionesController extends Controller
 {
-    public function login(Request $request)
+    public function obtenerCalificaciones($tipo)
     {
-        // Validar los datos del formulario
-        $request->validate([
-            'email' => 'required|string',
-            'password' => 'required|string',
-        ]);
+        // Obtén las calificaciones según el tipo (parcial o final)
+        $calificaciones = Calificacion::where('tipo', $tipo)->get();
 
-        // Verificar si el usuario existe en la base de datos
-        $email = email::where('email', $request->email)->first();
-
-        if (!$email || !Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            return back()->withErrors(['email' => 'Email o contraseña incorrectos.']);
-        }
-
-        // Redirigir al menú si la autenticación es exitosa
-        return redirect('/Menu');
+        // Devuelve las calificaciones como JSON
+        return response()->json($calificaciones);
     }
 }

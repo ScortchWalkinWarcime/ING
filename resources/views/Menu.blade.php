@@ -9,10 +9,25 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .logo-container {
+            position: absolute;
+            top: 250px;
+            left: 500px;
+            width: 1000px;
+            z-index: 100;
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: auto;
+            opacity: 0.6;
         }
 
         .header {
-            background-color: #f5deb3; 
+            background-color: rgba(245, 222, 179, 0.8);
             color: #333;
             text-align: center;
             padding: 15px;
@@ -24,7 +39,7 @@
             position: absolute;
             top: 70px;
             left: 10px;
-            background: #333;
+            background: rgba(51, 51, 51, 0.8);
             width: 200px;
             padding: 10px;
             border-radius: 5px;
@@ -32,7 +47,7 @@
         }
 
         .menu-item {
-            background: #444;
+            background: rgba(68, 68, 68, 0.8);
             color: white;
             padding: 10px;
             cursor: pointer;
@@ -44,7 +59,7 @@
 
         .submenu {
             display: none;
-            background: #555;
+            background: rgba(85, 85, 85, 0.8);
             margin-top: 5px;
             padding-left: 10px;
         }
@@ -57,15 +72,14 @@
         }
 
         .submenu a:hover {
-            background: #666;
+            background: rgba(102, 102, 102, 0.8);
         }
 
-    /*Posicionar el contenedor de calificaciones a la derecha del menú*/
         #calificaciones-container {
             position: absolute;
             top: 70px;
             left: 230px;
-            background: #f9f9f9;
+            background: rgba(249, 249, 249, 0.9);
             padding: 15px;
             border-radius: 5px;
             width: 300px;
@@ -74,6 +88,10 @@
     </style>
 </head>
 <body>
+
+    <div class="logo-container">
+        <img src="{{ asset('Itesa-Logo.png') }}" alt="Logo ITESA">
+    </div>
 
     <div class="header">
         Bienvenido Alumno
@@ -102,20 +120,16 @@
     <script>
         function toggleMenu(id) {
             var menu = document.getElementById(id);
-            if (menu.style.display === "block") {
-                menu.style.display = "none";
-            } else {
-                menu.style.display = "block";
-            }
+            menu.style.display = (menu.style.display === "block") ? "none" : "block";
         }
-
+        
         document.addEventListener("DOMContentLoaded", function () {
             function cargarCalificaciones(tipo) {
                 fetch(`/calificaciones/${tipo}`)
                     .then(response => response.json())
                     .then(data => {
                         let contenedor = document.getElementById("calificaciones-container");
-                        contenedor.innerHTML = "<h2>Calificaciones</h2>";
+                        contenedor.innerHTML = `<h2>Calificaciones (${tipo === 'parcial' ? 'Parciales' : 'Finales'})</h2>`;
 
                         if (data.length === 0) {
                             contenedor.innerHTML += "<p>No hay calificaciones disponibles.</p>";
@@ -130,9 +144,13 @@
                         });
                         contenedor.appendChild(lista);
                     })
-                    .catch(error => console.error('Error:', error));
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Hubo un error al cargar las calificaciones.');
+                    });
             }
 
+            // Exponer la función para que pueda ser llamada desde los botones
             window.cargarCalificaciones = cargarCalificaciones;
         });
     </script>

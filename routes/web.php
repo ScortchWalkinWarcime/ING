@@ -13,6 +13,10 @@ Route::get('/Itesa', function () {
     return view('welcome');
 })-> middleware('guest');
 
+Route::get('/calificaciones', function () {
+    return view('CalificacionesP');
+})-> middleware('guest');
+
 Route::get('/MenuMaestro', function () {
     return view('MenuMaestros');
 })-> middleware('auth');
