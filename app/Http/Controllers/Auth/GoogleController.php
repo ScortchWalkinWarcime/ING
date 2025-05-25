@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
+use App\Models\Estudiante;
+use App\Models\Docente;
+use App\Models\JefeDivision;
 
 class GoogleController extends Controller
 {
@@ -21,22 +23,28 @@ class GoogleController extends Controller
         try {
             $googleUser = Socialite::driver('google')->user();
 
-            // Buscar si el usuario ya existe
-            $user = User::where('email', $googleUser->getEmail())->first();
+            $email = $googleUser->getEmail();
 
-            // Si no existe, crearlo
-            if (!$user) {
-                $user = User::create([
-                    'name' => $googleUser->getName(),
-                    'email' => $googleUser->getEmail(),
-                    'password' => bcrypt('password'), // Puedes mejorarlo
-                ]);
+            // Attempt to find user in Estudiante model
+            $estudiante = Estudiante::where('correo', $email)->first();
+            if ($estudiante) {
+                Auth::guard('web')->login($estudiante);
+                return redirect('/Menu');
             }
 
-            // Iniciar sesión con el usuario
-            Auth::login($user);
+            // Attempt to find user in Docente model
+            $docente = Docente::where('correo', $email)->first();
+            if ($docente) {
+                Auth::guard('docentes')->login($docente);
+                return redirect('/MenuMaestros');
+            }
 
-            return redirect('http://localhost:8000/Menu');
+            // Attempt to find user in JefeDivision model
+            $jefeDivision = JefeDivision::where('correo', $email)->first();
+            if ($jefeDivision) {
+                Auth::guard('jefedivision')->login($jefeDivision);
+                return redirect('/MenuJefesDivision');
+            }
 
         } catch (\Exception $e) {
             return redirect('/')->with('error', 'No se pudo autenticar con Google.');
